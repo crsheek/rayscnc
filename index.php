@@ -35,7 +35,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Custom Dashboard">
-    <meta name="author" content="Cynthia Sheek">
+    <meta name="author" content="Cynthia Sheek, Textus Web Consulting">
     <title>Rays Collectibles</title>
     <?php include_once("includes/page_header.php"); ?>
         
@@ -67,7 +67,7 @@
       switch($page){
         case "portal": include("portal.php"); break;
         case "users" : include("users.php");  break;
-        case "pull"  : include("pull_list.php");  break;
+        case "pulluser"  : include("pull_list.php");  break;
         default:       include("dashboard.php"); break;
       }
     ?>
