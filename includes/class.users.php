@@ -9,11 +9,10 @@ class Users {
 
 
 	/**
-	 * add a new user
+	 * add a new user from registration page
 	 * @param [type] $data [description]
 	 */
 	public function addPullUser($data){
-		//echo "<br> received:";print_r($data);
 		$query = "INSERT INTO `users` 
 			(`userid`, 
 			`firstname`, 
@@ -56,7 +55,7 @@ class Users {
 	public function getUserByUserName($username=''){
 		$result = [];
 		if ($username <> ''):
-			$result = $this->db->getOne("SELECT `userid` FROM `users` WHERE `username` = ?s", $username);
+			$result = $this->db->getAll("SELECT `userid`, `password` FROM `users` WHERE `username` = ?s", $username);
 		endif;
 		return $result;
 	}
@@ -76,4 +75,12 @@ class Users {
 	}
 
 
+	/**
+	 * check user exists and log them in to the dashboard
+	 * @param  [type] $credentials [description]
+	 * @return [type]              [description]
+	 */
+	public function login($credentials){
+
+	}
 }

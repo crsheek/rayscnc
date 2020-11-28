@@ -1,21 +1,67 @@
 <?php
 class db{
-	private $_dbhost = 'localhost';
-	private $_dbname = 'rayscnc';
-	private $_dbuser = 'textus';
-	private $_dbpass = '';
+// live	
+	private $_dbhost = 'https://a2plcpnl0334.prod.iad2.secureserver.net';
+	private $_dbname = 'cncadmin';
+	private $_dbuser = 'cncmaster';
+	private $_dbpass = '6fYY3zJrnqHkaML';
 	private $_dbconn = null;
 
-	public function __construct(){	
-		$this->_dbconn = new mysqli($this->_dbhost, $this->_dbuser, $this->_dbpass, $this->_dbname);
+	//cindys local -- not working
+	private $_dbhost_dev = 'localhost';	
+	private $_dbname_dev = 'cncadmin';
+	private $_dbuser_dev = 'cncmaster';
+	private $_dbpass_dev = 'textu$adm!n';
+
+	public $roles = null;
+
+
+	public function __construct($host=''){
+		if ($host==='dev'):
+			$this->_dbconn = new mysqli($this->_dbhost, $this->_dbuser_dev, $this->_dbpass_dev, $this->_dbname_dev);
+		else:
+			$this->_dbconn = new mysqli($this->_dbhost_dev, $this->_dbuser, $this->_dbpass, $this->_dbname);
+		endif;	
 		if (mysqli_connect_errno()) {
 			printf("Database Connection Error: %s\n", mysqli_connect_error());
 			exit();
 		} else {
-//			echo "<br> successful db connection";
+			$this->roles = $this->getRoles();
 		}
 	}
 
+
+
+	/**
+	 * get all roles
+	 */
+	public function getRoles(){
+		return $this->doQuery("SELECT * FROM roles");
+	}
+
+	/**
+	 * check username and password sent from login page
+	 */
+	public function doLogin($post){
+
+		$username =  $this->realscape($post['username']);
+		$password =  $this->realscape($post['password']);
+		
+		$sql = "SELECT userid, password FROM users WHERE username='".$username."'";
+		$result = $this->doFetch($sql);
+		if ($result['userid'] > 0):
+			if (password_verify($password, $result['password'])):
+				return true;
+			else:
+				return false;
+			//if has password and password_verify($password, $result['password']) -- success
+			//note: on register or create, use password_hash ($selected_pw, config['pwhash']) to store a pw
+			endif;
+		endif;
+		return false;
+	}
+
+// supporting functions for db queries
 
 	public function dbClose(){
 		mysqli_close($this->_dbconn);
