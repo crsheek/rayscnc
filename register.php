@@ -1,7 +1,7 @@
 
 <div class="container text-center  p-3 bg-light text-dark" style="min-height:800px;">
   <div class="row d-flex flex-column justify-content-center bg-dark text-light pt-2">
-	<a href = "http://rayscollectibles.com/dashboard/index.php"><img class="mb-4 mx-auto" style="border-radius:30px" src="./assets/img/rays-logo-simple.png" alt="Rays Collectibles" width="100" height="100"></a>
+	<a href = "http://rayscollectibles.com"><img class="mb-4 mx-auto" style="border-radius:30px" src="./assets/img/logo-border.png" alt="Rays Collectibles" width="100" height="100"></a>
 
 <?php
 if (isset($_POST['btnRegister'])): 
